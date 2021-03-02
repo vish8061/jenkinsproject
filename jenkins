@@ -1,0 +1,35 @@
+node{
+ 
+def tomcatWeb = 'C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps'
+ 
+stage('SCM Checkout'){
+git 'https://github.com/vish8061/TestProject/tree/master/myfirstwebapp'
+}
+stage('Compile-Package-create-war-file'){
+
+ 
+// Get maven home path
+
+ 
+def mvnHome = tool name: 'Maven 3.6.3', type: 'maven'
+
+ 
+bat "${mvnHome}/bin/mvn package"
+
+ 
+}
+
+ 
+stage('Deploy to Tomcat'){
+
+ 
+bat "copy target\\myfirstwebapp.war \"${tomcatWeb}\\myfirstwebapp.war\""
+
+ 
+}
+
+ 
+ 
+
+ 
+}
